@@ -196,7 +196,7 @@ uint64_t whitePawnMoves(uint64_t pawns, uint64_t empty, uint64_t enemies) {
     //Checks if 2 jump move is available.
     uint64_t push2 = ((push1 & RANK_3) << 8) & empty;  
     // Adds top left and top right squares to captures
-    uint64_t captures = ((pawns << 7) & NOT_H_FILE) ((pawns << 9) & NOT_A_FILE); 
+    uint64_t captures = ((pawns << 7) & NOT_H_FILE) | ((pawns << 9) & NOT_A_FILE); 
     //(captures & enemies) returns only vaild diagonal moves
     return push1 | push2 | (captures & enemies); 
 }
@@ -265,7 +265,7 @@ int moveKing(uint64_t king, uint64_t destSpace, uint64_t board[12]) {
     int kingSide = pieceBelongsToSide(White, identifyPiece(king, board));
 
     if (kingSide) {vaildKingMoves ^= (vaildKingMoves & whitePieces(board));
-    } else {vaildKingMoves ^= (vaildKingMoves & blackPieces(board))}
+    } else {vaildKingMoves ^= (vaildKingMoves & blackPieces(board));}
 
     if ((vaildKingMoves & destSpace) == 0) return 0;
 
